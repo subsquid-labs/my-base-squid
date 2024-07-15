@@ -11,18 +11,18 @@ import {
 export const processor = new EvmBatchProcessor()
     // Lookup archive by the network name in Subsquid registry
     // See https://docs.subsquid.io/evm-indexing/supported-networks/
-    .setGateway('https://v2.archive.subsquid.io/network/ethereum-mainnet')
+    .setGateway('https://v2.archive.subsquid.io/network/base-mainnet')
     // Chain RPC endpoint is required for
     //  - indexing unfinalized blocks https://docs.subsquid.io/basics/unfinalized-blocks/
     //  - querying the contract state https://docs.subsquid.io/evm-indexing/query-state/
     .setRpcEndpoint({
         // Set the URL via .env for local runs or via secrets when deploying to Subsquid Cloud
         // https://docs.subsquid.io/deploy-squid/env-variables/
-        url: assertNotNull(process.env.RPC_ETH_HTTP, 'No RPC endpoint supplied'),
+        url: assertNotNull(process.env.RPC_BASE_HTTP, 'No RPC endpoint supplied'),
         // More RPC connection options at https://docs.subsquid.io/evm-indexing/configuration/initialization/#set-data-source
         rateLimit: 10
     })
-    .setFinalityConfirmation(75)
+    .setFinalityConfirmation(480)
     .setFields({
         transaction: {
             from: true,
