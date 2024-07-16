@@ -1,7 +1,19 @@
-type Burn @entity {
-  id: ID!
+type Trade @entity {
+  id: ID! # log id from SQD SDK
+  trader: String!
+  subject: String!
+  isBuy: Boolean!
+  shareAmount: BigInt!
+  ethAmount: BigInt!
+  protocolEthAmount: BigInt!
+  subjectEthAmount: BigInt!
+  supply: BigInt!
+  transaction: Transaction
+}
+
+type Transaction @entity {
+  id: ID! # transaction hash
   block: Int!
-  address: String! @index
-  value: BigInt!
-  txHash: String!
+  to: String
+  trades: [Trade!] @derivedFrom(field: "transaction")
 }

@@ -1,1 +1,2 @@
-export * from "./burn.model"
+export * from "./trade.model"
+export * from "./transaction.model"
