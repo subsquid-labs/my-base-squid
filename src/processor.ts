@@ -7,6 +7,9 @@ import {
     Log as _Log,
     Transaction as _Transaction,
 } from '@subsquid/evm-processor'
+import * as friendTechShares from './abi/friendTechShares'
+
+export const FRIENDTECH_SHARES_ADDRESS = '0xCF205808Ed36593aa40a44F10c7f7C2F67d4A4d4'.toLowerCase()
 
 export const processor = new EvmBatchProcessor()
     // Lookup archive by the network name in Subsquid registry
@@ -25,16 +28,17 @@ export const processor = new EvmBatchProcessor()
     .setFinalityConfirmation(480)
     .setFields({
         transaction: {
-            from: true,
-            value: true,
             hash: true,
+            to: true
         },
     })
     .setBlockRange({
-        from: 0,
+        from: 2430440,
     })
-    .addTransaction({
-        to: ['0x0000000000000000000000000000000000000000'],
+    .addLog({
+        address: [FRIENDTECH_SHARES_ADDRESS],
+        topic0: [friendTechShares.events.Trade.topic],
+        transaction: true
     })
 
 export type Fields = EvmBatchProcessorFields<typeof processor>
